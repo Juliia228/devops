@@ -36,14 +36,46 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      #
+      - name: Lint
+        uses: py-actions/flake8@v2
+
       # Create archive
       - name: Archive
-        run: 7z a archive.7z main.py
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip
+          zip -r archive.zip *
 
       # Uploads artefact
       - name: Upload a Build Artefact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: py-app
-          path: archive.7z
+          path: archive.zip
 
+      # Uploads artefact to Google Drive
+      - name: Upload to Google Drive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          filename: "archive.zip"
+          name: "archive.zip"
+          overwrite: "true"
+          folderId: ${{ secrets.FOLDER }}
+          credentials: ${{ secrets.CREDENTIALS }}
+
+  to_docker:
+    runs-on: windows-latest
+
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+      - name: Build and push the Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: Juliia228/devops:latest
