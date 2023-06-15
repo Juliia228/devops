@@ -36,7 +36,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-
+      # Lint
+      - name: Lint
+        run: |
+          pip install flake8
+           flake8 . --count --show-source --statistics
 
       # Create archive
       - name: Archive
