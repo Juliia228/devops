@@ -40,7 +40,7 @@ jobs:
       - name: Lint
         run: |
           pip install flake8
-           flake8 . --count --select=E4,E43,E431 --show-source --statistics
+           flake8 . --count --show-source --statistics
 
       # Create archive
       - name: Archive
@@ -66,19 +66,23 @@ jobs:
           folderId: ${{ secrets.FOLDER }}
           credentials: ${{ secrets.CREDENTIALS }}
 
-  #
-  to_docker:
+  # Upload Docker image to DockerHub
+  docker:
+    # Is OS that the job will run on
     runs-on: ubuntu-latest
 
+    # Includes tasks and their description
     steps:
+      # Login to DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
 
+      # Build and push the Docker image
       - name: Build and push the Docker image
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: juliia228/devops:latest
+          tags: ${{ secrets.USERNAME }}/devops:latest
