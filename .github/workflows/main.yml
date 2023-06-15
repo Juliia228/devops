@@ -38,7 +38,9 @@ jobs:
         
       # Builds app
       - name: Build
-        run: python main.py
+        run: |
+          export FLASK_APP=${{ secrets.FLASK_APP }}
+          flask run
 
        # Uploads artefact
       - name: Upload a Build Artefact
