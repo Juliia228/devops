@@ -39,7 +39,7 @@ jobs:
       - name: Python Linter
         uses: sunnysid3up/python-linter@master
         with:
-          source: "devops"
+          source: "main.py"
 
       # Create archive
       - name: Archive
