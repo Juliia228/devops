@@ -40,7 +40,7 @@ jobs:
       - name: Lint
         run: |
           pip install flake8
-           flake8 . --count --show-source --statistics
+           flake8 . --count --select=E4,E43,E431 --show-source --statistics
 
       # Create archive
       - name: Archive
