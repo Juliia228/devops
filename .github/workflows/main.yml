@@ -38,15 +38,11 @@ jobs:
 
       # Lint
       - name: Lint
-        run: |
-          pip install flake8
-           flake8 . --count --show-source --statistics
+        run: flake8 . --count --show-source --statistics
 
       # Testing
       - name: Test
-        run: |
-          pip install pytest
-          python -m pytest test.py
+        run: python -m pytest test.py
 
       # Create archive
       - name: Archive
