@@ -38,21 +38,17 @@ jobs:
         
       # Builds app
       - name: Build
-        uses: Nuitka/Nuitka-Action@main
-        with:
-          nuitka-version: main
-          script-name: main.py
-          onefile: true
+        run: python main.py
 
        # Uploads artefact
       - name: Upload a Build Artefact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: py-app
-          path: main.exe
+          path: main.py
 
       # Create archive
       - name: Archive
-        run: 7z a archive.7z main.exe
+        run: 7z a archive.7z main.py
 
 
